@@ -35,27 +35,39 @@ void Game::deadSnake(){
 
 /*------------------------------ The Maze -----------------------------*/
 
+/** @brief Checks if the last character is the start point.
+    @return 1 if it is, 0 otherwise. */
 bool Game::isInitialPosition( char ch ){
     return ( ch == '*' );
 }
 
+/** @brief Checks if the last character is an wall.
+    @return 1 if it is, 0 otherwise. */
 bool Game::isWall( char ch ){
     return ( ch == '#' );
 }
 
+/** @brief Checks if the last character is an free space.
+    @return 1 if it is, 0 otherwise. */
 bool Game::isFree( char ch ){
     return ( ch == ' ' );
 }
 
+/** @brief Checks if the last character is a mark.
+    @return 1 if it is, 0 otherwise. */
 bool Game::isInvisibleWall( char ch ){
     return ( ch == '.' );
 }
 
+/** @brief Checks if the snake ate the apple.
+    @return 1 if it did, 0 otherwise. */
 bool Game::ateApple( ){ TODO }
 
 /*------------------------------ Actions ------------------------------*/
 
-Position Game::initialPosition(){
+/** @brief Identify the snack start point on the maze. 
+*   @return Snack start point. */
+Position Game::startPosition(){
 
     // Goes through the maze trying to find the start_ point.
     for( int i = 0 ; i < lv.currentBoard.size() ; i++ ){        // Goes through each pos of the vector
@@ -71,6 +83,10 @@ Position Game::initialPosition(){
     }
 }
 
+/** @brief Throws an apple on the game maze.
+*   @return The apple spawn position. */
 Position Game::throwApple(){ TODO }
 
+/** @brief Moves the snake on position.
+*   @return 1 if the snake ate the apple/crashed somewhere and 0 otherwise. */
 bool Game::moveSnake(){ TODO }

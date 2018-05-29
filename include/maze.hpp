@@ -4,7 +4,7 @@
  * @since May, 26.
  * @date May, 28.
  * @author Oziel Alves (ozielalves@ufrn.edu.br)
- * @author Max Willian ()
+ * @author Max Willian (maxwilliam780@gmail.com)
  * @title The Maze
  */
 

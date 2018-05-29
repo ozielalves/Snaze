@@ -4,7 +4,7 @@
  * @since May, 26.
  * @date May, 28.
  * @author Oziel Alves (ozielalves@ufrn.edu.br)
- * @author Max Willian ()
+ * @author Max Willian (maxwilliam780@gmail.com)
  * @title The Maze
  */
 
@@ -116,38 +116,41 @@ public:
 	};
 
 	/** @brief Checks if the last character is the start point.
-        @return 1 if it is, 0 otherwise*/
+        @return 1 if it is, 0 otherwise. */
 	bool isInitialPosition( char ch );
 
 	/** @brief Checks if the last character is an wall.
-		@return 1 if it is, 0 otherwise */
+		@return 1 if it is, 0 otherwise. */
     bool isWall( char ch );
 
     /** @brief Checks if the last character is an free space.
-		@return 1 if it is, 0 otherwise */
+		@return 1 if it is, 0 otherwise. */
 	bool isFree( char ch );
 
 	/** @brief Checks if the last character is a mark.
-		@return 1 if it is, 0 otherwise */
+		@return 1 if it is, 0 otherwise. */
 	bool isInvisibleWall( char ch );
 
  	/** @brief Checks if the snake ate the apple.
-		@return 1 if it did, 0 otherwise */
+		@return 1 if it did, 0 otherwise. */
 	bool ateApple( );
 
 /*------------------------------ Actions ------------------------------*/
-	/*! @brief Identify the snack start point on the maze. 
+	/** @brief Identify the snack start point on the maze. 
 	 * 	@return Snack start point
 	 */
 	Position startPoint();
 
-	/*! @brief Throws an apple on the game maze.
-	 * 	@return The apple spawn position */
+	/** @brief Throws an apple on the game maze.
+	 * 	@return The apple spawn position. */
 	Position throwApple();
 
-	/*! @brief Moves the snake on position.
-	 * 	@return 1 if the snake ate the apple/crashed somewhere and 0 otherwise.*/
+	/** @brief Moves the snake on position.
+	 * 	@return 1 if the snake ate the apple/crashed somewhere and 0 otherwise. */
 	bool moveSnake();
 
 
 };	
+
+/*------------------------ Setters and getters ------------------------*/
+

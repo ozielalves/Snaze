@@ -4,7 +4,7 @@
  * @since May, 27.
  * @date May, 29. 
  * @author Oziel Alves (ozielalves@ufrn.edu.br)
- * @author Max Willian ()
+ * @author Max Willian (maxwilliam780@gmail.com)
  * @brief File containing the game phase data.
  */
 
