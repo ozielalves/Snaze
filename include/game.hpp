@@ -8,8 +8,8 @@
  * @title The Maze
  */
 
-#ifndef _GAME_H_
-#define _GAME_H_
+#ifndef _GAME_HPP_
+#define _GAME_HPP_
 
 #include <iostream>
 #include <string>
@@ -133,7 +133,7 @@ public:
 
  	/** @brief Checks if the snake ate the apple.
 		@return 1 if it did, 0 otherwise */
-	bool eatingApple( );
+	bool ateApple( );
 
 /*------------------------------ Actions ------------------------------*/
 	/*! @brief Identify the snack start point on the maze. 
