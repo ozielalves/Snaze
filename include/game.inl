@@ -90,3 +90,90 @@ Position Game::throwApple(){ TODO }
 /** @brief Moves the snake on position.
 *   @return 1 if the snake ate the apple/crashed somewhere and 0 otherwise. */
 bool Game::moveSnake(){ TODO }
+
+/*------------------------ Setters and getters ------------------------*/
+
+/** @brief Determines how many phases the game have.
+*  @param lvs The Phases.
+*  @return True if the number of phases > zero, False otherwise. 
+*/
+bool Game::setLevels( int lvs ){
+    if( lvs > 0 ){
+        levels = lvs;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/** @brief Recover the game number of phases.
+ *  @return The Phases. */
+int Game::getLevels( ) const{
+    return levels;
+}
+
+/** @brief Define a vetor with the game boards.
+ *  @param bdrs The boards.
+ *  @return True if the number of boards > zero; False otherwise. 
+ */
+bool Game::setBoards( std::vector<std::vector<std::string>> bdrs ){
+    int qtd = bdrs.size();
+    if( qtd > 0 ){
+        boards = bdrs;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/** @brief Recover the game boards.
+ *  @return The boards. */
+std::vector<std::vector<std::string>> Game::getBoards( ) const{
+    return boards;
+}
+
+/** @brief Takes one life from the player.
+ *  @return True if the player has lifes to be taken; False otherwise. */
+bool Game::setLifes( ){
+    if( lifes > 0 ){
+        lifes--;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/** @brief Recover the player's number of lifes.
+ *  @return The lifes */
+int Game::getLifes( ) const{
+    return lifes;
+}
+
+/** @brief Update the player's status
+ *  @param stts Status */
+void Game::setStatus( int stts ){
+    status = stts;
+}
+
+/** @brief Recover the players's status.
+ *  @return True se jogador ganhou; False se perdeu */
+bool Game::getStatus( ) const{
+    if( status == 1 ){
+        return true;
+    }else if( status == 0 ){
+        return false;
+    }
+}
+
+/** @brief Update the game board sizes.
+ *  @param szBoards Vecctor with the sizes. */
+void Game::setSizeBoards( std::vector<Position> szBoards ){
+    sizesBoards = szBoards;
+}
+
+/** @brief Recover the vector with the sizes. */
+std::vector<Position> Game::getSizeBoards( void ) const{
+    return sizesBoards;
+}
+
+

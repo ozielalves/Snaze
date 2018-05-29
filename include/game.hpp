@@ -16,16 +16,30 @@
 #include <vector>
 #include <ctime>
 
+#include "level.hpp"
+
 /**
  * Game class:
  * With functions to help with the game procedure
  */  
 class Game{
 
+private:
+	
+	int levels; 					                 //<! Total os game phases.
+	std::vector<std::vector<std::string>> boards;    //<! Mazes to be processed
+	int lifes;   			                         //<! Snake lives
+	int status;					                     //<! 0 if the player loses, 1 otherwise.
+	std::vector<Position> sizesBoards; 	             //!< Maze sizes.
+
+	Position apple; 								//!< Apple position in the game.
+
 public:
 
+	int currentStatus;								//!< Current status of the game
+
 	//! @brief Initializing an empty game. 
-	Game(): lives(5), currentStatus(EXPAND) {}
+	Game(): lives(5), currentStatus(GROW) {}
 /*---------------------------- Status -------------------------------*/
 	enum Status	{
 		RUN = 0, 	//!< The snake start the apple chase.
@@ -37,22 +51,22 @@ public:
 	};
 
 	/** @brief The snake starts the apple chase. */
-    void runSnake();
+    void runSnake( );
 
 	/** @brief Makes the snake grow one snake_size_unity. */
-    void growSnake();
+    void growSnake( );
 
 
     /** @brief Calls the next level. */
-    void nextLevel();
+    void nextLevel( );
 
 
     /** @brief Checks if the snake crashed somewhere. */
-    bool crashSnake();
+    bool crashSnake( );
 
 
     /** @brief Simulates the snaked death. */
-    void deadSnake();
+    void deadSnake( );
 
     
 /*--------------------------- Directions ----------------------------*/
@@ -136,21 +150,71 @@ public:
 	bool ateApple( );
 
 /*------------------------------ Actions ------------------------------*/
+
 	/** @brief Identify the snack start point on the maze. 
 	 * 	@return Snack start point
 	 */
 	Position startPoint();
 
 	/** @brief Throws an apple on the game maze.
-	 * 	@return The apple spawn position. */
+	 *	@return The apple spawn position. */
 	Position throwApple();
 
 	/** @brief Moves the snake on position.
 	 * 	@return 1 if the snake ate the apple/crashed somewhere and 0 otherwise. */
 	bool moveSnake();
-
-
-};	
+	
 
 /*------------------------ Setters and getters ------------------------*/
 
+	/** @brief Determines how many phases the game have.
+     *	@param lvs The Phases.
+     *	@return True if the number of phases > zero, False otherwise. 
+     */
+	bool setLevels( int lvs );
+
+
+	/** @brief Recover the game number of phases.
+	 *	@return The Phases. */
+    int getLevels( ) const;
+
+
+	/** @brief Define a vetor with the game boards.
+ 	 *	@param bdrs The boards.
+	 *	@return True if the number of boards > zero; False otherwise. 
+	 */
+	bool setBoards( std::vector<std::vector<std::string>> bdrs );
+
+	/** @brief Recoer the game boards.
+	 * 	@return The boards. */
+	std::vector<std::vector<std::string>> getBoards( ) const;
+
+	/** @brief Takes one life from the player.
+	 *	@return True if the player has lifes to be taken; False otherwise. */
+	bool setLifes( );
+
+
+	/** @brief Recover the player's number of lifes.
+	 * 	@return The lifes */
+	int getLifes( ) const;
+
+
+	/** @brief Update the player's status
+	 *	@param stts Status */
+	void setStatus( int stts );
+
+
+	/** @brief Recover the players's status.
+	 *	@return True se jogador ganhou; False se perdeu */
+	bool getStatus( ) const;
+
+
+	/** @brief Update the game board sizes.
+	 *	@param szBoards Vecctor with the sizes. */
+	void setSizeBoards( std::vector<Position> szBoards );
+
+
+	/** @brief Recover the vector with the sizes. */
+	std::vector<Position> getSizeBoards( ) const;		
+
+};
