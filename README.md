@@ -26,12 +26,19 @@ $ ./TODO
 ```
 
 ## Implementation
-The whole code was made based on the std Vector, so the objective of this implementations is to recreate the experience that an usual client has when using the Vector's lib.
 
 
 ## TODO
 
-- [ ]
+- [ ] Snaze Game class
+  - [ ]  Status Functions
+  - [ ] Position/Diretions Funtions
+  - [ ] Maze reading and Processing
+  - [ ] Action Functions
+  - [ ] Setters and Getters 
+- [ ] Snake class
+- [ ] Level class 
+- [ ] Game process(and error) manager
 
 ## Authorship
 
