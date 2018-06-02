@@ -39,6 +39,7 @@ $ ./TODO
 - [ ] Snake class
 - [x] Level class 
 - [ ] Game process(and error) manager
+- [ ] Makefile >:D
 
 ## Authorship
 
