@@ -27,7 +27,7 @@ class Level {
         int totalApples;                         //!< Total of apples in the maze.
         int eatenApples;			   			 //!< Total of eaten apples.
 
-		Position start;							//!< Start position on the maze.
+		Game::Position start;							//!< Start position on the maze.
 
 };
 

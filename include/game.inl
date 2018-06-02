@@ -1,20 +1,90 @@
 #include "game.hpp"
 
 Level lv;
+Snake sk;
 
 /*---------------------------- Status -------------------------------*/
 
 /** @brief The snake start_s the apple chase. */
-void Game::runSnake(){ TODO }
+void Game::runSnake( ){
+
+    bool solve = sk.solveMaze( lv.currentBoard, lv.initial, sizesBoards[ lv.currentLevel - 1 ], apple );
+
+    bool stop = moveSnake( );
+
+    if( stop == false ){
+        currentStatus = RUN;
+    }
+
+    if( solve == false ){
+        currentStatus = CRASH;
+        return;
+    }
+}
 
 /** @brief Makes the snake grow one snake_size_unity. */
-void Game::growSnake(){ TODO }
+void Game::growSnake( ){
+
+    Position pos = initialPosition();
+
+    throwApple();
+
+    if( sk.sizeSnake == 0 ){ // If the snake size is 1 it is transformed to snake
+        lv.currentBoard[pos.y][pos.x] = 'D';
+        sk.snakeBody.push_front( pos );
+
+        sk.sizeSnake += 1; // Snake growing
+    }
+
+    if( sk.sizeSnake >= 1 ){ // If the snake size is bigger or iqual to 1 it grows
+        sk.Directions.clear();
+        sk.currentDirection = 0;
+        lv.start = sk.snakeBody.front();
+
+        sk.snakeBody.push_front( sk.snakeBody.front() ); // New pos to the new bod part (Valid)
+
+        sk.sizeSnake += 1; // Snake grows
+    }
+
+    if( lv.eatenApples == lv.totalApples ){ 
+        currentStatus = NEXT_LEVEL;
+    }
+
+    if( lv.eatenApples < lv.totalApples ){
+        currentStatus = RUN;
+    }
+
+}
 
 /** @brief Calls the next level. */
-void Game::nextLevel(){ TODO }
+void Game::nextLevel( ){ 
+
+    lv.currentLevel += 1;
+
+    if( lv.currentLevel <= levels ){
+        lv.currentBoard = boards[lv.currentLevel-1]; // Recovers the level board
+    }
+
+    // Restarting the whole game
+    lv.eatenApples = 0;
+    sk.snakeBody.clear();
+    sk.snakeSize = 0;
+
+    currentStatus = EXPAND;
+
+}
+
+
+/** @brief Verifies if the snake crashed somewhere. */
+bool Game::crashSnake(){
+
+    std::cout << "Oh no! You're crash!\n";
+    currentStatus = DEAD;
+
+}
 
 /** @brief Checks if the snake crashed somewhere. */
-bool Game::crashSnake(){
+bool Game::crashSnake( ){
 
     std::cout << "You're crash! :c \n";
     currentStatus = DEAD;
@@ -29,7 +99,7 @@ void Game::deadSnake(){
     std::string tcl;
     std::getline( std::cin, tcl );
 
-    currentState = RUN;
+    currentStatus = RUN;
 
 }
 
@@ -61,13 +131,23 @@ bool Game::isInvisibleWall( char ch ){
 
 /** @brief Checks if the snake ate the apple.
     @return 1 if it did, 0 otherwise. */
-bool Game::ateApple( ){ TODO }
+bool Game::ateApple( ){ 
+
+    Position pos = sk.snakeBody.front();
+
+    if( pos == apple ){
+        return true;
+    } else {
+        return false;
+    }
+
+}
 
 /*------------------------------ Actions ------------------------------*/
 
 /** @brief Identify the snack start point on the maze. 
 *   @return Snack start point. */
-Position Game::startPosition(){
+Position Game::startPosition( ){
 
     // Goes through the maze trying to find the start_ point.
     for( int i = 0 ; i < lv.currentBoard.size() ; i++ ){        // Goes through each pos of the vector
@@ -85,11 +165,59 @@ Position Game::startPosition(){
 
 /** @brief Throws an apple on the game maze.
 *   @return The apple spawn position. */
-Position Game::throwApple(){ TODO }
+Position Game::throwApple( ){
+
+    bool invalid = true;
+
+    std::srand(std::time(0)); // seed to the rand (random numbers)
+    Position tamanho = sizesBoards[lv.currentLevel-1]; // Gets the current level
+
+    // Draw the apple until it falls into free space
+    while( invalid ){
+
+        int menor = 1;
+        int maiorLinha  = tamanho.y -1;
+        int maiorColuna = tamanho.x -1;
+
+        Position pos; 
+
+        pos.y = rand()%(maiorLinha-menor+1) + menor;  // Draw an random number to the line
+        pos.x = rand()%(maiorColuna-menor+1) + menor; // Draw an random number to the column
+        if( isFree(lv.currentBoard[pos.y][pos.x]) ){
+            invalid = false;
+            lv.currentBoard[pos.y][pos.x] = 'a';
+            apple = pos;
+        }
+    }
+}
 
 /** @brief Moves the snake on position.
 *   @return 1 if the snake ate the apple/crashed somewhere and 0 otherwise. */
-bool Game::moveSnake(){ TODO }
+bool Game::moveSnake( ){ 
+
+    clearSnake( ); // Deletes the past snake in the board.
+
+    Position dir = sk.Directions[sk.currentDirection];
+    sk.snakeBody.push_front( dir );
+    sk.snakeBody.pop_back();
+
+    
+    putSnake( ); // Puts the snake back in the board.
+
+    if( eatingApple() ){ // If the snake ate the apple
+        currentStatus = GROW;
+        lv.eatenApples += 1;
+        return true; 
+    }
+
+    if( sk.Directions.size() == sk.currentDirection ){
+        return true; // Stop is changed 
+    }
+
+    sk.currentDirection += 1;
+
+    return false; // Else, stop is changed to false, the game keeps running.
+}
 
 /*------------------------ Setters and getters ------------------------*/
 
@@ -172,8 +300,63 @@ void Game::setSizeBoards( std::vector<Position> szBoards ){
 }
 
 /** @brief Recover the vector with the sizes. */
-std::vector<Position> Game::getSizeBoards( void ) const{
+std::vector<Game::Position> Game::getSizeBoards( ) const{
     return sizesBoards;
 }
 
 
+    /*/-/-/-/-/-/ Level Setters and Getters /-/-/-/-/-/-*/
+
+
+/** @brief Define a fase atual que o jogador se encontra.
+    @param lvl A fase
+    @return True se tiver um numero de fases maior que zero; False otherwise. */
+bool Game::setCurrentLevel( int lvl ){
+    if( lvl > 0 ){
+        lv.currentLevel = lvl;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+/** @brief Recupera a fase atual do jogo.
+    @return A fase. */
+int Game::getCurrentLevel( ) const{
+    return lv.currentLevel;
+}
+
+/** @brief Recupera o tabuleiro atual do jogo.
+    @return O tabuleiro. */
+std::vector<std::string> Game::getCurrentBoard( ) const{
+    return lv.currentBoard;
+}
+
+/** @brief Define o tabuleiro atual do jogo.
+    @param lvl O tabuleiro
+    @return True se tiver um tabuleiro; False otherwise. */
+bool setCurrentBoard( std::vector<std::string> brd ){
+    lv.currentBoard = brd;
+}
+
+/** @brief Recupera as macas comidas do jogo.
+     @return A quandiade de macas. */
+int Game::getEatenApples( ) {
+    return lv.eatenApples;
+}
+
+/** @brief Set the snake's head position in the maze with the right character to represent it.*/
+void Game::putSnake()
+{
+    lv.currentBoard[sk.snakeBody[0].y][sk.snakeBody[0].x] = 'D'; //desenha a cabeça
+    for(auto i = 1u; i < sk.snakeBody.size(); i++)
+        lv.currentBoard[sk.snakeBody[i].y][sk.snakeBody[i].x] = '0';
+}
+
+/** @brief Set the snake's body position in the maze with the blank space character to represent it.*/
+void Game::clearSnake()
+{
+    for(auto i = 0u; i < sk.snakeBody.size(); i++)
+        lv.currentBoard[sk.snakeBody[i].y][sk.snakeBody[i].x] = ' ';
+}

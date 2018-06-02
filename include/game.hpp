@@ -17,30 +17,23 @@
 #include <ctime>
 
 #include "level.hpp"
+#include "playerSnake.hpp"
 
 /**
  * Game class:
  * With functions to help with the game procedure
  */  
+
 class Game{
-
-private:
-	
-	int levels; 					                 //<! Total os game phases.
-	std::vector<std::vector<std::string>> boards;    //<! Mazes to be processed
-	int lifes;   			                         //<! Snake lives
-	int status;					                     //<! 0 if the player loses, 1 otherwise.
-	std::vector<Position> sizesBoards; 	             //!< Maze sizes.
-
-	Position apple; 								//!< Apple position in the game.
 
 public:
 
-	int currentStatus;								//!< Current status of the game
+	int currentStatus; //!< Current status of the game
 
 	//! @brief Initializing an empty game. 
-	Game(): lives(5), currentStatus(GROW) {}
-/*---------------------------- Status -------------------------------*/
+	Game(): lifes(5), currentStatus(GROW) {}
+
+/*-------------------------------- Status -----------------------------------*/
 	enum Status	{
 		RUN = 0, 	//!< The snake start the apple chase.
 		GROW, 		//!< The snake keep walking and grows one snake_size_unity.
@@ -69,7 +62,7 @@ public:
     void deadSnake( );
 
     
-/*--------------------------- Directions ----------------------------*/
+/*------------------------------ Directions ---------------------------------*/
 
 	enum Direction{
 		NORTH = 0, 
@@ -78,8 +71,9 @@ public:
 		EAST = 3   
 	};
 
-/*---------------------------- Position -----------------------------*/
+/*------------------------------- Position ----------------------------------*/
 
+public:	
 	struct Position{
 
 		int x;   //<! Position col
@@ -89,7 +83,7 @@ public:
 		Position( int x_=0, int y_=0 ): x(x_), y(y_) {}
 
 		/*! Configurator: Changes the position according to the direction.*/
-		void set( const direction_t& dir ){
+		void set( const short int& dir ){
 			switch( dir ){
 				case NORTH:
 					y -= 1;
@@ -107,7 +101,7 @@ public:
 					x += 1;
 					break;
 				default:
-					cout << "Invalid Direction!";
+					std::cout << "Invalid Direction!";
 			}
 		}
 
@@ -119,7 +113,7 @@ public:
 
 	};
 
-/*------------------------------ The Maze -----------------------------*/
+/*------------------------------- The Maze ----------------------------------*/
 	/*! Structure to define what means each character on the Maze */
 	struct Maze{
 		char init    = 'i'; /*<! Character that defines the snake's start point. */
@@ -149,7 +143,7 @@ public:
 		@return 1 if it did, 0 otherwise. */
 	bool ateApple( );
 
-/*------------------------------ Actions ------------------------------*/
+/*------------------------------- Actions -----------------------------------*/
 
 	/** @brief Identify the snack start point on the maze. 
 	 * 	@return Snack start point
@@ -165,7 +159,7 @@ public:
 	bool moveSnake();
 	
 
-/*------------------------ Setters and getters ------------------------*/
+/*-------------------------- Setters and getters ----------------------------*/
 
 	/** @brief Determines how many phases the game have.
      *	@param lvs The Phases.
@@ -217,4 +211,48 @@ public:
 	/** @brief Recover the vector with the sizes. */
 	std::vector<Position> getSizeBoards( ) const;		
 
+	/*/-/-/-/-/-/ Level Setters and Getters /-/-/-/-/-/-*/
+
+	/** @brief Determines the current game phase.
+	 * 	@param lvl The phase.
+ 	 * 	@return True se tiver um numero de fases maior que zero; False otherwise. */
+	bool setCurrentLevel( int lvl );
+
+	/** @brief Recover the current game phase.
+     *	@return The phase. */
+	int getCurrentLevel( ) const;
+
+	/** @brief Determines the current game board.
+	 * 	@param brd The board
+	 * 	@return True if there is an board, False otherwise. */
+	bool setCurrentBoard( std::vector<std::string> brd );
+
+	/** @brief Recover the current game board.
+	 * 	@return The board. */
+	std::vector<std::string> getCurrentBoard( ) const;
+
+	/** @brief Recover the eaten apples in the maze.
+	 * 	@return The total number of eaten apples. */
+	int getEatenApples( );
+
+	/** @brief Set the snake's head position in the maze with the right character to represent it. */
+	void putSnake();
+
+	/** @brief Set the snake's body position in the maze with the blank space character to represent it.*/
+    void clearSnake();
+
+private:
+	
+	int levels; 					                 //<! Total os game phases.
+	std::vector<std::vector<std::string>> boards;    //<! Mazes to be processed
+	int lifes;   			                         //<! Snake lifes
+	int status;					                     //<! 0 if the player loses, 1 otherwise.
+	std::vector<Position> sizesBoards; 	             //!< Maze sizes.
+
+	Position apple; 								//!< Apple position in the game.
+
 };
+
+#include "game.inl"
+
+#endif 
