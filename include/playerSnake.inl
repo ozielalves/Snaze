@@ -19,8 +19,8 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
     Game gm; // To access the functions.
 
     int freeSpaces = 0; // Free spaces on the board.
-    std::stack< Position > marked; // Stack.
-    Position currentPosition; // To control the backtracking current position.
+    std::stack< Game::Position > marked; // Stack.
+    Game::Position currentPosition; // To control the backtracking current position.
 
     // Creating an position board -> (1) Not free ; (0) Free.
     // Making easy the way search to the apple.
@@ -49,7 +49,7 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
     // II ) Search for cells not visited yet.
     while( freeSpaces > 0 ){ // While there's free spaces in the maze
 
-        std::vector<Position> neighborhood; //<! The neighborhood
+        std::vector< Game::Position > neighborhood; //<! The neighborhood
         neighborhood.push_back(adjacent_position(currentPosition, NORTH));//[0]
         neighborhood.push_back(adjacent_position(currentPosition, SOUTH));//[1]
         neighborhood.push_back(adjacent_position(currentPosition, EAST)); //[3]
@@ -70,7 +70,7 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
             while( !(marked.empty()) ){
 
                 // See who is the next
-                Position dir = marked.top();
+                Game::Position dir = marked.top();
 
                 // Adds to the list
                 Directions.push_front( dir );
@@ -88,7 +88,7 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
             or maze[neighborhood[3].y][neighborhood[3].x] == 0 ){ // Free nghbrs, are not wall and weren't visited yet
 
             // IV ) Choses one of the neighbors, one of them will enter.
-            Position vizinho;
+            Game::Position vizinho;
             for (auto i = 0u; i < neighborhood.size(); i++){
 
             	// If the neighbor pos is free and is not the snake body.
@@ -114,7 +114,7 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
             marked.pop();
 
             // Saves the top
-            Position newPosition = marked.top();
+            Game::Position newPosition = marked.top();
 
             // Makes the new cell the current cell
             currentPosition = newPosition;
@@ -129,7 +129,7 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 	@param pos Current position.
 	@param dir Current position next place.
 	@return Posição adjacente. */
-Position Snake::adjacentPosition( Game::Position pos, short int dir ){
+Game::Position Snake::adjacentPosition( Game::Position pos, short int dir ){
 
     switch( dir ){
         case NORTH:
