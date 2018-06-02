@@ -31,13 +31,13 @@ $ ./TODO
 ## TODO
 
 - [ ] Snaze Game class
-  - [ ]  Status Functions
+  - [ ] Status Functions
   - [ ] Position/Diretions Funtions
   - [ ] Maze reading and Processing
   - [ ] Action Functions
   - [ ] Setters and Getters 
 - [ ] Snake class
-- [ ] Level class 
+- [x] Level class 
 - [ ] Game process(and error) manager
 
 ## Authorship
