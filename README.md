@@ -19,10 +19,13 @@ $ make clean
 ## How to execute
 Now, we show how to run the program
 ```bash
-# To execute program:
-$ ./TODO
+# To compile:
+make
 
-# Detail: The program will also show the possible errors.(?) A gnt exclui isso se não der pra fazer.;-;
+# To execute program:
+$ ./snaze
+
+# Detail: The program will also show the possible errors.
 ```
 
 ## Implementation
