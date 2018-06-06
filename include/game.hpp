@@ -16,14 +16,69 @@
 #include <vector>
 #include <ctime>
 
+/*------------------------------ Directions ---------------------------------*/
+
+	enum Direction{
+		
+		NORTH = 0, 
+		SOUTH = 1, 
+		WEST = 2,  
+		EAST = 3   
+	};
+
+/*------------------------------- Position ----------------------------------*/
+
+	struct Position{
+
+		int x;   //<! Position col
+		int y;   //<! Position Lin
+
+		/*! Initializer */
+		Position( int x_ = 0, int y_ = 0 ): x(x_), y(y_) {}
+
+		/*! Configurator: Changes the position according to the direction.*/
+		void set( const short int& dir ){
+			
+			switch( dir ){
+				case NORTH:
+					y -= 1;
+					break;
+
+				case SOUTH:
+					y += 1;
+					break;
+
+				case WEST:
+					x -= 1;
+					break;
+
+		  		case EAST:
+					x += 1;
+					break;
+				default:
+					std::cout << "Invalid Direction!";
+			}
+		}
+
+		// To check if the snack keeps followin the same direction
+		bool operator==( const Position& rhs ) const{
+			return (y == rhs.y and x == rhs.x );
+		}
+
+
+	};
+
+/*---------------------------------------------------------------------------*/
+
 #include "level.hpp"
 #include "playerSnake.hpp"
+
+/*---------------------------------------------------------------------------*/
 
 /**
  * Game class:
  * With functions to help with the game procedure
  */  
-
 class Game{
 
 public:
@@ -35,6 +90,7 @@ public:
 
 /*-------------------------------- Status -----------------------------------*/
 	enum Status	{
+		
 		RUN = 0, 	//!< The snake start the apple chase.
 		GROW, 		//!< The snake keep walking and grows one snake_size_unity.
 		NEXT_LEVEL, //!< The snake ate all the apples on that level and goes to the next level.
@@ -65,57 +121,18 @@ public:
 /*------------------------------ Directions ---------------------------------*/
 
 	enum Direction{
+		
 		NORTH = 0, 
 		SOUTH = 1, 
 		WEST = 2,  
 		EAST = 3   
 	};
 
-/*------------------------------- Position ----------------------------------*/
-
-public:	
-	struct Position{
-
-		int x;   //<! Position col
-		int y;   //<! Position Lin
-
-		/*! Initializer */
-		Position( int x_=0, int y_=0 ): x(x_), y(y_) {}
-
-		/*! Configurator: Changes the position according to the direction.*/
-		void set( const short int& dir ){
-			switch( dir ){
-				case NORTH:
-					y -= 1;
-					break;
-
-				case SOUTH:
-					y += 1;
-					break;
-
-				case WEST:
-					x -= 1;
-					break;
-
-		  		case EAST:
-					x += 1;
-					break;
-				default:
-					std::cout << "Invalid Direction!";
-			}
-		}
-
-		// To check if the snack keeps followin the same direction
-		bool operator==( const Position& rhs ) const{
-			return (y == rhs.y and x == rhs.x );
-		}
-
-
-	};
 
 /*------------------------------- The Maze ----------------------------------*/
 	/*! Structure to define what means each character on the Maze */
 	struct Maze{
+
 		char init    = 'i'; /*<! Character that defines the snake's start point. */
 		char wall    = '#'; /*<! Character that defines a wall. */
 		char way     = ' '; /*<! Character that defines an open way. */
@@ -125,7 +142,7 @@ public:
 
 	/** @brief Checks if the last character is the start point.
         @return 1 if it is, 0 otherwise. */
-	bool isInitialPosition( char ch );
+	bool isStartPoint( char ch );
 
 	/** @brief Checks if the last character is an wall.
 		@return 1 if it is, 0 otherwise. */
@@ -253,6 +270,6 @@ private:
 
 };
 
-#include "game.inl"
+//#include "game.inl"
 
 #endif 

@@ -1,7 +1,7 @@
 /**
  * @file playerSnake.inl
  * @version 1.0
- * @since May, 26.
+ * @since May, 26. 
  * @date May, 30.
  * @author Oziel Alves (ozielalves@ufrn.edu.br)
  * @author Max Willian (maxwilliam780@gmail.com)
@@ -9,24 +9,26 @@
  */
 
 #include "playerSnake.hpp"
+
+Game gm; // To access the functions.
+
 /** @brief Trys to find a way to the apple.
    	@return 1 if it's possible, 0 otherwise. */
 bool Snake::solveMaze( 	std::vector<std::string> currentBoard, 
-						Game::Position initialPosition, 
-						Game::Position sizeBoard, 
-						Game::Position apple ){
-
-    Game gm; // To access the functions.
+						Position initialPosition, 
+						Position sizeBoard, 
+						Position apple ){
 
     int freeSpaces = 0; // Free spaces on the board.
-    std::stack< Game::Position > marked; // Stack.
-    Game::Position currentPosition; // To control the backtracking current position.
+    std::stack< Position > marked; // Stack.
+    Position currentPosition; // To control the backtracking current position.
 
     // Creating an position board -> (1) Not free ; (0) Free.
     // Making easy the way search to the apple.
     int maze[sizeBoard.y][sizeBoard.x];
-    for( int i=0 ; i < sizeBoard.y ; i++ ){
-        for( int j=0 ; j < sizeBoard.x; j++ ){
+
+    for( int i(0) ; i < sizeBoard.y ; i++ ){
+        for( int j(0) ; j < sizeBoard.x; j++ ){
             if( gm.isWall( currentBoard[i][j] ) ){ // If the current position is an wall, it's not free.
                 maze[i][j] = 1;
             } else if( gm.isInvisibleWall( currentBoard[i][j] ) ){  // If the current position is an invisible wall, it's not free.
@@ -49,17 +51,17 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
     // II ) Search for cells not visited yet.
     while( freeSpaces > 0 ){ // While there's free spaces in the maze
 
-        std::vector< Game::Position > neighborhood; //<! The neighborhood
-        neighborhood.push_back(adjacent_position(currentPosition, NORTH));//[0]
-        neighborhood.push_back(adjacent_position(currentPosition, SOUTH));//[1]
-        neighborhood.push_back(adjacent_position(currentPosition, EAST)); //[3]
-        neighborhood.push_back(adjacent_position(currentPosition, WEST)); //[2]
+        std::vector< Position > neighborhood; //<! The neighborhood
+        neighborhood.push_back(adjacentPosition(currentPosition, NORTH));//[0]
+        neighborhood.push_back(adjacentPosition(currentPosition, SOUTH));//[1]
+        neighborhood.push_back(adjacentPosition(currentPosition, EAST)); //[3]
+        neighborhood.push_back(adjacentPosition(currentPosition, WEST)); //[2]
 
 
         /* 	Avoiding a segmentation fault, if the position is invalid,
         	it will be changed to the initial position (which is occupied). */
         for (auto i = 0u; i < neighborhood.size(); i++)
-            if( not is_valid_position( neighborhood[i], sizeBoard ) ) // se a posicao do visinho for invalida
+            if( not is_validPosition( neighborhood[i], sizeBoard ) ) // se a posicao do visinho for invalida
                 neighborhood[i] = initialPosition;
 
         if( currentPosition == apple ){ // If the current pos is the apple.
@@ -70,7 +72,7 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
             while( !(marked.empty()) ){
 
                 // See who is the next
-                Game::Position dir = marked.top();
+                Position dir = marked.top();
 
                 // Adds to the list
                 Directions.push_front( dir );
@@ -88,7 +90,7 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
             or maze[neighborhood[3].y][neighborhood[3].x] == 0 ){ // Free nghbrs, are not wall and weren't visited yet
 
             // IV ) Choses one of the neighbors, one of them will enter.
-            Game::Position vizinho;
+            Position vizinho;
             for (auto i = 0u; i < neighborhood.size(); i++){
 
             	// If the neighbor pos is free and is not the snake body.
@@ -114,7 +116,7 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
             marked.pop();
 
             // Saves the top
-            Game::Position newPosition = marked.top();
+            Position newPosition = marked.top();
 
             // Makes the new cell the current cell
             currentPosition = newPosition;
@@ -129,7 +131,7 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 	@param pos Current position.
 	@param dir Current position next place.
 	@return Posição adjacente. */
-Game::Position Snake::adjacentPosition( Game::Position pos, short int dir ){
+Position Snake::adjacentPosition( Position pos, short int dir ){
 
     switch( dir ){
         case NORTH:
@@ -154,7 +156,7 @@ Game::Position Snake::adjacentPosition( Game::Position pos, short int dir ){
 
 /** @brief verify if the last position is part of the snake body.
 	@return true if it is a position occuped by the snake, false otherwise. */
-bool Snake::is_snakeBody(const Game::Position & pos) const{
+bool Snake::is_snakeBody(const Position & pos) const{
 
     std::cout << "Trying to know if it is body, " << pos.y <<" "<< pos.x << " é body? " << "\n";
     std::cout << "Snake size = " << snakeBody.size() << "\n";
@@ -171,7 +173,7 @@ bool Snake::is_snakeBody(const Game::Position & pos) const{
 
 /** @brief Determines if the 'pos' is a valid position in the maze
 	@return true if the 'pos' is valid, false otherwise. */
-bool Snake::is_valid_position( Game::Position pos, Game::Position size ){
+bool Snake::is_validPosition( Position pos, Position size ){
 
     return (pos.x >= 0 and pos.x < size.x and pos.y >= 0 and pos.y < size.y );
 }

@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "playerSnake.hpp"
 
 Level lv;
 Snake sk;
@@ -8,7 +9,7 @@ Snake sk;
 /** @brief The snake start_s the apple chase. */
 void Game::runSnake( ){
 
-    bool solve = sk.solveMaze( lv.currentBoard, lv.initial, sizesBoards[ lv.currentLevel - 1 ], apple );
+    bool solve = sk.solveMaze( lv.currentBoard, lv.start, sizesBoards[ lv.currentLevel - 1 ], apple );
 
     bool stop = moveSnake( );
 
@@ -25,25 +26,25 @@ void Game::runSnake( ){
 /** @brief Makes the snake grow one snake_size_unity. */
 void Game::growSnake( ){
 
-    Position pos = initialPosition();
+    Position pos = startPoint();
 
     throwApple();
 
-    if( sk.sizeSnake == 0 ){ // If the snake size is 1 it is transformed to snake
+    if( sk.snakeSize == 0 ){ // If the snake size is 1 it is transformed to snake
         lv.currentBoard[pos.y][pos.x] = 'D';
         sk.snakeBody.push_front( pos );
 
-        sk.sizeSnake += 1; // Snake growing
+        sk.snakeSize += 1; // Snake growing
     }
 
-    if( sk.sizeSnake >= 1 ){ // If the snake size is bigger or iqual to 1 it grows
+    if( sk.snakeSize >= 1 ){ // If the snake size is bigger or iqual to 1 it grows
         sk.Directions.clear();
         sk.currentDirection = 0;
         lv.start = sk.snakeBody.front();
 
         sk.snakeBody.push_front( sk.snakeBody.front() ); // New pos to the new bod part (Valid)
 
-        sk.sizeSnake += 1; // Snake grows
+        sk.snakeSize += 1; // Snake grows
     }
 
     if( lv.eatenApples == lv.totalApples ){ 
@@ -70,16 +71,7 @@ void Game::nextLevel( ){
     sk.snakeBody.clear();
     sk.snakeSize = 0;
 
-    currentStatus = EXPAND;
-
-}
-
-
-/** @brief Verifies if the snake crashed somewhere. */
-bool Game::crashSnake(){
-
-    std::cout << "Oh no! You're crash!\n";
-    currentStatus = DEAD;
+    currentStatus = GROW;
 
 }
 
@@ -93,7 +85,7 @@ bool Game::crashSnake( ){
 /** @brief Simulates the snaked death. */
 void Game::deadSnake(){
 
-    lives -= 1;
+    lifes -= 1;
 
     std::cout << ">>> Press <ENTER> when you are ready to continue.";
     std::string tcl;
@@ -107,7 +99,7 @@ void Game::deadSnake(){
 
 /** @brief Checks if the last character is the start point.
     @return 1 if it is, 0 otherwise. */
-bool Game::isInitialPosition( char ch ){
+bool Game::isStartPoint( char ch ){
     return ( ch == '*' );
 }
 
@@ -141,13 +133,13 @@ bool Game::ateApple( ){
         return false;
     }
 
-}
+} 
 
 /*------------------------------ Actions ------------------------------*/
 
 /** @brief Identify the snack start point on the maze. 
 *   @return Snack start point. */
-Position Game::startPosition( ){
+Position Game::startPoint( ){
 
     // Goes through the maze trying to find the start_ point.
     for( int i = 0 ; i < lv.currentBoard.size() ; i++ ){        // Goes through each pos of the vector
@@ -204,7 +196,7 @@ bool Game::moveSnake( ){
     
     putSnake( ); // Puts the snake back in the board.
 
-    if( eatingApple() ){ // If the snake ate the apple
+    if( ateApple() ){ // If the snake ate the apple
         currentStatus = GROW;
         lv.eatenApples += 1;
         return true; 
@@ -295,12 +287,12 @@ bool Game::getStatus( ) const{
 
 /** @brief Update the game board sizes.
  *  @param szBoards Vecctor with the sizes. */
-void Game::setSizeBoards( std::vector<Position> szBoards ){
+void Game::setSizeBoards( std::vector< Position > szBoards ){
     sizesBoards = szBoards;
 }
 
 /** @brief Recover the vector with the sizes. */
-std::vector<Game::Position> Game::getSizeBoards( ) const{
+std::vector<Position> Game::getSizeBoards( ) const{
     return sizesBoards;
 }
 
