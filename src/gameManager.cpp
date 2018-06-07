@@ -10,14 +10,14 @@
 
 #include "gameManager.hpp"
 
-Game gm;
+Game game;
 
 /** @brief Verifies if there is any error in the board.
     @return The finded error, if exists. */
 Manager::Error Manager::parsing( ){
 
 	// Getting the game board.
-    std::vector<std::vector<std::string>> boards_ = gm.getBoards();
+    std::vector<std::vector<std::string>> boards_ = game.getBoards();
 
     // Searching for erros in the maze.
     for( int i(0u) ; i < boards_.size() ;  i++ ){ // For each board
@@ -31,12 +31,12 @@ Manager::Error Manager::parsing( ){
                 char symb = boards_[i][j][k];
 
                 // If there is any extraneous symbol.
-                if( !(gm.isStartPoint( symb )) and !( gm.isWall( symb )) and !(gm.isFree( symb )) and !(gm.isInvisibleWall( symb )) ){
+                if( !(game.isStartPoint( symb )) and !( game.isWall( symb )) and !(game.isFree( symb )) and !(game.isInvisibleWall( symb )) ){
                     return EXTRANEOUS_SYMBOL;
                 }
 
                 // Verifies if it is an start point.
-                if( gm.isStartPoint( symb ) ){
+                if( game.isStartPoint( symb ) ){
                     starting_point += 1;
                 }
         	} 
@@ -101,12 +101,12 @@ Manager::Error Manager::initialize( char * file ){
 
     } 
 
-    gm.setLevels( _levels );           
-    gm.setSizeBoards( boards_size ); 
-    gm.setBoards( _boards );         
+    game.setLevels( _levels );           
+    game.setSizeBoards( boards_size ); 
+    game.setBoards( _boards );         
 	
 	// Starts the game
-	gm.nextLevel(); 
+	game.nextLevel(); 
 
     auto result = parsing();
 
@@ -121,8 +121,8 @@ void Manager::process( ){
 
 //! @brief Shows the start conditions of the game.
 void Manager::welcome( ){
-    int n_levels = gm.getLevels();
-    int n_lives  = gm.getLifes();
+    int n_levels = game.getLevels();
+    int n_lives  = game.getLifes();
 
     system("clear");                                                                                          
     std::cout << "	                                Welcome, This is the Snaze game                          	\n";    
@@ -140,19 +140,19 @@ void Manager::welcome( ){
 	@return True if the game if over, 0 otherwise. */
 bool Manager::gameover( ){
 
-    int currentLevel_ = gm.getCurrentLevel();
-    int _levels = gm.getLevels();
-    int life = gm.getLifes();
+    int currentLevel_ = game.getCurrentLevel();
+    int _levels = game.getLevels();
+    int life = game.getLifes();
 
 
     // If the snake ate all the apples.
     if( currentLevel_ > _levels ){
-        gm.setStatus( 1 ); // WON
+        game.setStatus( 1 ); // WON
         return true;
     }
     // If there is no more lifes left.
     else if ( life == 0 ){
-        gm.setStatus( 0 ); // LOSE
+        game.setStatus( 0 ); // LOSE
         return true;
     }
     else { // The game continues...
@@ -163,11 +163,11 @@ bool Manager::gameover( ){
 //! @brief Show the phase's result.
 void Manager::render( ){
     system("clear");
-    std::vector<std::string> currentBoard_ = gm.getCurrentBoard();
-    Position initial = gm.startPoint();
-    std::cout << "                                              LEVEL "<< gm.getCurrentLevel() <<"                                             \n";
+    std::vector<std::string> currentBoard_ = game.getCurrentBoard();
+    Position initial = game.startPoint();
+    std::cout << "                                              LEVEL "<< game.getCurrentLevel() <<"                                             \n";
     std::cout << "                                                                                                  \n";
-    std::cout << "                                LIVES: " << gm.getLifes() << "    ||   Food eaten:  " << gm.getEatenApples() << " of 10                             \n";
+    std::cout << "                                LIVES: " << game.getLifes() << "    ||   Food eaten:  " << game.getEatenApples() << " of 10                             \n";
     std::cout << "\n";
     std::cout << "//////////////////////////////////////////////////////////////////////////////////////////////////\n";
 
@@ -193,7 +193,7 @@ void Manager::render( ){
  void Manager::render_final( ){
 
     // Recovers the Player status
-    bool result = gm.getStatus();
+    bool result = game.getStatus();
         std::cout << "\n";
     std::cout << "//////////////////////////////////////////////////////////////////////////////////////////////////\n";
     std::cout << "                                            Game Over                                             \n";
@@ -213,25 +213,25 @@ void Manager::render( ){
 //! @brief Updates the game status.
 void Manager::update( ){
 
-    switch (gm.currentStatus){
+    switch (game.currentStatus){
         case Game::Status::RUN:
-            gm.runSnake(); 
+            game.runSnake(); 
             break;
         case Game::Status::GROW:
-            gm.growSnake();
+            game.growSnake();
             break;
         case Game::Status::NEXT_LEVEL:
-            gm.nextLevel();
+            game.nextLevel();
                 std::cout << "\n";
                 std::cout << "                         Press <ENTER> When you're ready.                      \n";
                 std::cout << "\n";
                 std::cout << "//////////////////////////////////////////////////////////////////////////////////////////////////\n";
             break;
         case Game::Status::CRASH:
-            gm.crashSnake();
+            game.crashSnake();
             break;
         case Game::Status::DEAD:
-            gm.deadSnake();
+            game.deadSnake();
             break;
     }
 

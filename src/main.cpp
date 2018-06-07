@@ -9,10 +9,14 @@
  */
 
 #include "gameManager.hpp"
+#include "game.hpp"
+#include "level.hpp"
+#include "playerSnake.hpp"
 
 int main( int argc, char * argv[] ){
 
 	Manager Manager;
+	
 	auto result = Manager.initialize( argv[1] );
 std::cout << "ooi 1\n";
 	if(result != Manager::Error::BOARD_OK ){ 
@@ -36,7 +40,7 @@ std::cout << "ooi 2 \n";
 std::cout << "ooi 3\n";
 
 	// The game loop
-	while(not Manager.gameover()){
+	while( not Manager.gameover() ){
 		Manager.process();
 		Manager.update();
 		Manager.render();
