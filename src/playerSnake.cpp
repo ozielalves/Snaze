@@ -10,11 +10,79 @@
 
 #include "playerSnake.hpp"
 
+#include <queue>
+#include <deque>
 Game gm; // To access the functions.
+struct Pos{
+	std::deque<Direction> path;
+	Position current;
+	
+	Pos(Position a,std::deque<Direction> l = std::deque<Direction>() ): path(l),current(a) {}
+};
 
+bool Snake::solveMaze( 	std::vector<std::string> currentBoard, 
+						Position initialPosition, 
+						Position sizeBoard, 
+						Position apple ){
+
+	int maze[sizeBoard.y][sizeBoard.x];
+
+	for( int i(0) ; i < sizeBoard.y ; i++ ){
+		for( int j(0) ; j < sizeBoard.x; j++ ){
+			if( gm.isWall( currentBoard[i][j] ) ){ // If the current position is an wall, it's not free.
+				maze[i][j] = 1;
+			} else if( gm.isInvisibleWall( currentBoard[i][j] ) ){  // If the current position is an invisible wall, it's not free.
+				maze[i][j] = 1;
+			} else { // If it is free.
+				maze[i][j] = 0; // Initializes everything with zero.
+			}
+
+		}
+	}
+	std::queue<Pos> Q;
+	Q.push(Pos(initialPosition));
+
+	while(!Q.empty()){
+		auto V = Q.front();
+		if(V.current == apple){
+			Directions = V.path;
+			return true;
+		}
+
+		else if(maze[V.current.y][V.current.x] == 1){
+			Q.pop();
+			continue;
+		}
+		V.path.push_back(Direction::NORTH);
+        Q.push(Pos(adjacentPosition(V.current, NORTH),V.path));//[0]
+		
+		V.path.pop_back();
+		V.path.push_back(Direction::SOUTH);
+        
+		Q.push(Pos(adjacentPosition(V.current, SOUTH),V.path ));//[1]
+		
+		V.path.pop_back();
+		V.path.push_back(Direction::EAST);
+        
+		Q.push(Pos(adjacentPosition(V.current, EAST),V.path)); //[3]
+		
+		V.path.pop_back();
+		V.path.push_back(Direction::WEST);
+        
+		Q.push(Pos(adjacentPosition(V.current, WEST),V.path)); //[2]
+
+		Q.pop();
+		}
+
+	return false;
+
+	}
+
+
+					
 /** @brief Trys to find a way to the apple.
    	@return 1 if it's possible, 0 otherwise. */
-bool Snake::solveMaze( 	std::vector<std::string> currentBoard, 
+/*bool Snake::solveMaze( 	std::vector<std::string> currentBoard, 
 						Position initialPosition, 
 						Position sizeBoard, 
 						Position apple ){
@@ -40,11 +108,11 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 
         }
     }
-
+*/
 /*------------------------- Backtracking ---------------------------*/
 
     // I ) Makes initialPosition the current cell and mark as visited
-    currentPosition = initialPosition;
+ /*   currentPosition = initialPosition;
     maze[initialPosition.y][initialPosition.x] = 1; // Makes an Not free space.
     freeSpaces -= 1; // decreases one free space
 
@@ -58,9 +126,9 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
         neighborhood.push_back(adjacentPosition(currentPosition, WEST)); //[2]
 
 
-        /* 	Avoiding a segmentation fault, if the position is invalid,
+    */    /* 	Avoiding a segmentation fault, if the position is invalid,
         	it will be changed to the initial position (which is occupied). */
-        for (auto i = 0u; i < neighborhood.size(); i++)
+     /*   for (auto i = 0u; i < neighborhood.size(); i++)
             if( not is_validPosition( neighborhood[i], sizeBoard ) ) // se a posicao do visinho for invalida
                 neighborhood[i] = initialPosition;
 
@@ -126,7 +194,7 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 
     return false;
 }
-
+*/
 /** @brief Returns the adjacent position accoring to the direction.
 	@param pos Current position.
 	@param dir Current position next place.
