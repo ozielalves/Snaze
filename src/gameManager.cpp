@@ -175,7 +175,7 @@ void Manager::render( ){
     int numero_espacos = (int) ( 92 - currentBoard_.front().size() ) / 2;
     
     for( int i(0u); i < currentBoard_.size() ; i++ ){
-        std::cout << "::: ";
+        std::cout << "/// ";
         
         for (int j(0u); j < numero_espacos; ++j) // Printing spaces
             std::cout << " ";
@@ -185,7 +185,7 @@ void Manager::render( ){
         for (int j(0u); j < numero_espacos; ++j) // Printing spaces
             std::cout << " ";
         
-        std::cout << ":::\n";
+        std::cout << "///\n";
     }
  }
 
