@@ -20,6 +20,8 @@ struct Pos{
 	
 	Pos(Position a,std::deque<Position> l = std::deque<Position>() ): path(l),current(a) {}
 };
+/** @brief Trys to find a way to the apple.
+   	@return 1 if it's possible, 0 otherwise. */
 
 bool Snake::solveMaze( 	std::vector<std::string> currentBoard, 
 						Position initialPosition, 
@@ -48,7 +50,7 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 	int i = 0;
 	while(!Q.empty()){
 		++i;
-		std:: cout << "counter: " << i << std::endl;
+//		std:: cout << "counter: " << i << std::endl;
 		auto V = Q.front();
 		toHash.clear();
 		toHash += V.current.x + '0'; 
@@ -58,18 +60,19 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 			V.path.push_back(V.current);	
 			Directions = V.path;
 			std::cout << "ended true" << std::endl;
-			std::cout << "what was hashed just now " << V.current.x << " " <<  V.current.y << std::endl;
+//			std::cout << "what was hashed just now " << V.current.x << " " <<  V.current.y << std::endl;
 			for (auto i = V.path.begin(); i != V.path.end(); ++i) {
 				std::cout << "Solution Coordenates " << (*i).y << " " << (*i).x  << std::endl;
 			}
 				std::cout << "Apple loc " << apple.y << " " << apple.x << std::endl;
 
 			hash.clear();
+			hash.insert(toHash,0);
 			return true;
 		}
 
 		if(!hash.insert(toHash,0)) {
-		std::cout << "string that was already in hash: " << toHash << std::endl;
+//		std::cout << "string that was already in hash: " << toHash << std::endl;
 		Q.pop();
 		continue;
 		}
