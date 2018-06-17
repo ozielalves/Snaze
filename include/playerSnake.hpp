@@ -14,9 +14,9 @@
 #include <deque> // More efficient insertion and deletion (container)
 #include <cassert>
 #include <stack>
-
 #include "game.hpp"
-
+#include "hash.hpp"
+#include <functional>
 /**
  *  Snake Class
  *  Functions and variables responsable for the player info (snake).
@@ -29,7 +29,7 @@ class Snake {
         int currentDirection;               //!< Current drection.
         std::deque<Position> Directions;    //!< List of directions the should follow.
         std::deque<Position> snakeBody;     //!< Snake body positions. 
-
+		HashTable<std::string, int> hash;
 	public:
         //! @brief Initializing an empty snake.
 	    Snake() : snakeSize(0) {}

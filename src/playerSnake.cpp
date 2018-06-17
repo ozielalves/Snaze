@@ -14,10 +14,10 @@
 #include <deque>
 Game gm; // To access the functions.
 struct Pos{
-	std::deque<Direction> path;
+	std::deque<Position> path;
 	Position current;
 	
-	Pos(Position a,std::deque<Direction> l = std::deque<Direction>() ): path(l),current(a) {}
+	Pos(Position a,std::deque<Position> l = std::deque<Position>() ): path(l),current(a) {}
 };
 
 bool Snake::solveMaze( 	std::vector<std::string> currentBoard, 
@@ -41,39 +41,65 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 	}
 	std::queue<Pos> Q;
 	Q.push(Pos(initialPosition));
-
+	std::string toHash;
+	toHash += initialPosition.x + '0'; 
+	toHash += initialPosition.y + '0'; 
+//	std::cout << toHash << std::endl;
+	int i = 0;
 	while(!Q.empty()){
+		++i;
+		std:: cout << "counter: " << i << std::endl;
 		auto V = Q.front();
+		toHash.clear();
+		toHash += V.current.x + '0'; 
+		toHash += V.current.y + '0'; 
+		
 		if(V.current == apple){
+			//V.path.pop_front();	
 			Directions = V.path;
+			std::cout << "ended true" << std::endl;
+			std::cout << "what was hashed just now " << V.current.x << " " <<  V.current.y << std::endl;
+			for (auto i = V.path.begin(); i != V.path.end(); ++i) {
+				std::cout << "Coordenates " << (*i).y << (*i).x  << std::endl;
+			}
+
+		//	hash.clear();
 			return true;
+		}
+
+		if(!hash.insert(toHash,0)) {
+		std::cout << "string that was already in hash: " << toHash << std::endl;
+		Q.pop();
+		continue;
 		}
 
 		else if(maze[V.current.y][V.current.x] == 1){
 			Q.pop();
 			continue;
 		}
-		V.path.push_back(Direction::NORTH);
+		V.path.push_back(V.current);
         Q.push(Pos(adjacentPosition(V.current, NORTH),V.path));//[0]
 		
-		V.path.pop_back();
-		V.path.push_back(Direction::SOUTH);
+//		V.path.pop_back();
+//		V.path.push_back(adjacentPosition(V.current, SOUTH));
         
 		Q.push(Pos(adjacentPosition(V.current, SOUTH),V.path ));//[1]
 		
-		V.path.pop_back();
-		V.path.push_back(Direction::EAST);
+//		V.path.pop_back();
+//		V.path.push_back(adjacentPosition(V.current,WEST ));
         
 		Q.push(Pos(adjacentPosition(V.current, EAST),V.path)); //[3]
 		
-		V.path.pop_back();
-		V.path.push_back(Direction::WEST);
+//		V.path.pop_back();
+//		V.path.push_back(adjacentPosition(V.current, EAST));
         
 		Q.push(Pos(adjacentPosition(V.current, WEST),V.path)); //[2]
 
 		Q.pop();
 		}
 
+	std::cout << "ended false" << std::endl;
+	hash.clear();
 	return false;
 
 	}

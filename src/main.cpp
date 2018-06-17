@@ -9,9 +9,6 @@
  */
 
 #include "gameManager.hpp"
-#include "game.hpp"
-#include "level.hpp"
-#include "playerSnake.hpp"
 
 int main( int argc, char * argv[] ){
 
@@ -36,7 +33,7 @@ std::cout << "ooi 2 \n";
 
 
 	// Initial message
-    Manager.welcome();
+   // Manager.welcome();
 std::cout << "ooi 3\n";
 
 	// The game loop
