@@ -116,7 +116,7 @@ Manager::Error Manager::initialize( char * file ){
 //! @brief Calls the next Game phase.
 void Manager::process( ){
     
-    usleep(1000000); // Game pauses for some microseconds
+    usleep(100000); // Game pauses for some microseconds
 }
 
 //! @brief Shows the start conditions of the game.
