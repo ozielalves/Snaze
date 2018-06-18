@@ -42,7 +42,6 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 
 		}
 	}
-	hash.clear();
 	std::queue<Pos> Q;
 	Q.push(Pos(initialPosition));
 	std::string toHash;
@@ -67,6 +66,10 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 				std::cout << "Apple loc " << apple.y << " " << apple.x << std::endl;
 
 			hash.clear();
+			toHash.clear();
+			auto block = *(V.path.end()-2);
+			toHash += block.x + '0'; 
+			toHash += block.y + '0'; 
 			hash.insert(toHash,0);
 			return true;
 		}
