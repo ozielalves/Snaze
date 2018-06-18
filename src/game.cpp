@@ -9,7 +9,7 @@ Snake sk;
 /** @brief The snake start_s the apple chase. */
 void Game::runSnake( ){
 
-    bool solve = sk.solveMaze( lv.currentBoard, lv.start, sizesBoards[ lv.currentLevel - 1 ], apple );
+//    bool solve = sk.solveMaze( lv.currentBoard, lv.start, sizesBoards[ lv.currentLevel - 1 ], apple );
 
     bool stop = moveSnake( );
 
@@ -17,10 +17,10 @@ void Game::runSnake( ){
         currentStatus = RUN;
     }
 
-    if( solve == false ){
+/*    if( solve == false ){
         currentStatus = CRASH;
         return;
-    }
+    }*/
 }
 
 /** @brief Makes the snake grow one snake_size_unity. */
@@ -55,6 +55,7 @@ void Game::growSnake( ){
         currentStatus = RUN;
     }
 
+    bool solve = sk.solveMaze( lv.currentBoard, lv.start, sizesBoards[ lv.currentLevel - 1 ], apple );
 }
 
 /** @brief Calls the next level. */
