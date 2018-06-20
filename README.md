@@ -46,7 +46,7 @@ $ ./snaze data/boards
 
 ## Authorship
 
-Program developed by _Max Willian_ (*maxwilliam780@gmail.com*) and _Oziel Alves_ (*ozielalves@ufrn.edu.br*), 2018.1
+Program developed by _Max William_ (*maxwilliam780@gmail.com*) and _Oziel Alves_ (*ozielalves@ufrn.edu.br*), 2018.1
 
 &copy; IMD/UFRN 2018.
 
