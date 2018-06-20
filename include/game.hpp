@@ -25,7 +25,6 @@
 		SOUTH = 1, 
 		WEST = 2,  
 		EAST = 3,
-		NONE = 4
 	};
 
 /*------------------------------- Position ----------------------------------*/
@@ -122,9 +121,8 @@ public:
 		RUN = 0, 	//!< The snake start the apple chase.
 		GROW, 		//!< The snake keep walking and grows one snake_size_unity.
 		NEXT_LEVEL, //!< The snake ate all the apples on that level and goes to the next level.
-		CRASH, 		//!< The snake crashed on the wall or on its own tail.
-		DEAD, 		//!< The snake have no more lifes remaining.
-		RANDOM
+		DEAD,		//!< The snake crashed on the wall or on its own tail.
+		RANDOM 		//!< the snake couldn't find a solution for the maze and goes wild
 	};
 
 	/** @brief The snake starts the apple chase. */
@@ -141,25 +139,10 @@ public:
     void nextLevel( );
 
 
-    /** @brief Checks if the snake crashed somewhere. */
-    bool crashSnake( );
-
-
-    /** @brief Simulates the snaked death. */
+    /** @brief Simulates the snake's death. */
     void deadSnake( );
 
     
-/*------------------------------ Directions ---------------------------------*/
-
-	enum Direction{
-		
-		NORTH = 0, 
-		SOUTH = 1, 
-		WEST = 2,  
-		EAST = 3   
-	};
-
-
 /*------------------------------- The Maze ----------------------------------*/
 	/*! Structure to define what means each character on the Maze */
 	struct Maze{

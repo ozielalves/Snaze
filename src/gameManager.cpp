@@ -20,13 +20,13 @@ Manager::Error Manager::parsing( ){
     std::vector<std::vector<std::string>> boards_ = game.getBoards();
 
     // Searching for erros in the maze.
-    for( int i(0u) ; i < boards_.size() ;  i++ ){ // For each board
+    for( unsigned int i(0) ; i < boards_.size() ;  i++ ){ // For each board
 
         int starting_point = 0;
 
-        for( int j (0u) ; j < boards_[i].size() ; j++ ){ // For each board's line
+        for( unsigned int j (0) ; j < boards_[i].size() ; j++ ){ // For each board's line
 
-            for( int k(0u) ; k < boards_[i][j].size() ; k++ ){ // For each board's column
+            for( unsigned int k(0) ; k < boards_[i][j].size() ; k++ ){ // For each board's column
 
                 char symb = boards_[i][j][k];
 
@@ -174,7 +174,7 @@ void Manager::render( ){
 	// Adjusting the game (centralizando)
     int numero_espacos = (int) ( 92 - currentBoard_.front().size() ) / 2;
     
-    for( int i(0u); i < currentBoard_.size() ; i++ ){
+    for( unsigned int i(0u); i < currentBoard_.size() ; i++ ){
         std::cout << "/// ";
         
         for (int j(0u); j < numero_espacos; ++j) // Printing spaces
@@ -229,9 +229,6 @@ void Manager::update( ){
                 std::cout << "                         Press <ENTER> When you're ready.                      \n";
                 std::cout << "\n";
                 std::cout << "//////////////////////////////////////////////////////////////////////////////////////////////////\n";
-            break;
-        case Game::Status::CRASH:
-            game.crashSnake();
             break;
         case Game::Status::DEAD:
             game.deadSnake();

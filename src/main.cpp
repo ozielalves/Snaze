@@ -15,7 +15,6 @@ int main( int argc, char * argv[] ){
 	Manager Manager;
 	
 	auto result = Manager.initialize( argv[1] );
-std::cout << "ooi 1\n";
 	if(result != Manager::Error::BOARD_OK ){ 
 		if( result == Manager::Error::ARCHIVE_NOT_FINDED){
 			std::cout << "Could not find the file with the game info.\n";
@@ -29,12 +28,10 @@ std::cout << "ooi 1\n";
 		}
 		return 0;
 	}
-std::cout << "ooi 2 \n";
 
 
 	// Initial message
-   // Manager.welcome();
-std::cout << "ooi 3\n";
+    Manager.welcome();
 
 	// The game loop
 	while( not Manager.gameover() ){
@@ -42,8 +39,6 @@ std::cout << "ooi 3\n";
 		Manager.update();
 		Manager.render();
 	}
-std::cout << "ooi 4\n";
 	Manager.render_final();
-std::cout << "ooi 5 \n";
 	return 0;
 }

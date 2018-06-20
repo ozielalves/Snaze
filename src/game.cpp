@@ -22,16 +22,20 @@ void Game::random_move()
 
 	std::mt19937 random (std::chrono::system_clock::now().time_since_epoch().count());
 
-    clearSnake( ); // Deletes the past snake in the board.
 
     Position dir = adjacentPosition(sk.snakeBody.front(), random ()  % 4);
     
-	while(lv.currentBoard[dir.y][dir.x] == '0')
+	if(lv.currentBoard[dir.y][dir.x] == '0') // if it tries to touch itself
 	{
-    	Position dir = adjacentPosition(sk.snakeBody.front(), random ()  % 4);
+		currentStatus = DEAD;
+    
+		putSnake( ); // Puts the snake back in the board.
+		return;
+
 	}
+    clearSnake( ); // Deletes the past snake in the board.
 	if(isWall(lv.currentBoard[dir.y][dir.x])){
-		currentStatus = CRASH;
+		currentStatus = DEAD;
     
 		putSnake( ); // Puts the snake back in the board.
 		return;
@@ -53,7 +57,7 @@ void Game::random_move()
 void Game::growSnake( ){
 
     Position pos = startPoint();
-
+	
     throwApple();
 
     if( sk.snakeSize == 0 ){ // If the snake size is 1 it is transformed to snake
@@ -72,18 +76,21 @@ void Game::growSnake( ){
 
         sk.snakeSize += 1; // Snake grows
     }
+    
+	bool solve = sk.solveMaze( lv.currentBoard, lv.start, sizesBoards[ lv.currentLevel - 1 ], apple );
 
-    if( lv.eatenApples == lv.totalApples ){ 
+	if (solve == false) currentStatus = RANDOM;
+	
+	else currentStatus = RUN;
+
+    if( lv.eatenApples >= lv.totalApples ){ 
         currentStatus = NEXT_LEVEL;
     }
 
-    if( lv.eatenApples < lv.totalApples ){
+/*    if( lv.eatenApples < lv.totalApples ){
         currentStatus = RUN;
-    }
+    }*/
 
-    bool solve = sk.solveMaze( lv.currentBoard, lv.start, sizesBoards[ lv.currentLevel - 1 ], apple );
-
-	if (solve == false) currentStatus = RANDOM;
 
 }
 
@@ -105,21 +112,17 @@ void Game::nextLevel( ){
 
 }
 
-/** @brief Checks if the snake crashed somewhere. */
-bool Game::crashSnake( ){
-
-    std::cout << "You're crash! :c \n";
-    currentStatus = DEAD;
-}
-
 /** @brief Simulates the snaked death. */
 void Game::deadSnake(){
 
     lifes -= 1;
 
+    std::cout << "You've crashed! :c \n";
     std::cout << ">>> Press <ENTER> when you are ready to continue.";
     std::string tcl;
     std::getline( std::cin, tcl );
+	
+	clearSnake();
 	
 	/* Resizes the snake's body*/
 	while(sk.snakeBody.size() > 2) sk.snakeBody.pop_back();
@@ -179,8 +182,8 @@ bool Game::ateApple( ){
 Position Game::startPoint( ){
 
     // Goes through the maze trying to find the start_ point.
-    for( int i = 0 ; i < lv.currentBoard.size() ; i++ ){        // Goes through each pos of the vector
-        for( int j=0 ; j < lv.currentBoard[i].length() ; j++ ){ // Goes through the whole string
+    for( unsigned int i = 0 ; i < lv.currentBoard.size() ; i++ ){        // Goes through each pos of the vector
+        for( unsigned int j=0 ; j < lv.currentBoard[i].length() ; j++ ){ // Goes through the whole string
             if( lv.currentBoard[i][j] == '*' ){
                 Position start_;
                 start_.x = j; // col

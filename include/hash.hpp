@@ -55,9 +55,6 @@ class HashTable
 				
 				itr_b++;
 				if (true == equalFunc((*itr).m_key , new_entry.m_key)){
-					std::cout << "itr content " << (*itr).m_key << std::endl;
-					std::cout << "entry content" << new_entry.m_key << std::endl;
-					std::cout << "error" << std::endl;
 					return false;
 				}
 			}
@@ -154,7 +151,6 @@ class HashTable
 		
 		void rehash(){
 
-	//		std::cout << "calls to rehash " << std::endl;
 			std::vector<std::forward_list<HashEntry>> oldLists = Lists;
 			// Create new double-sized, empty table
 			tablesize =  next_prime( 2 * tablesize ); 

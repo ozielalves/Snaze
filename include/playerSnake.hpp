@@ -26,7 +26,7 @@ class Snake {
 
 	public:
         int snakeSize;                      //!< Snake size.
-        int currentDirection;               //!< Current drection.
+        unsigned int currentDirection;      //!< Current drection.
         std::deque<Position> Directions;    //!< List of directions the should follow.
         std::deque<Position> snakeBody;     //!< Snake body positions. 
 		HashTable<std::string, int> hash;

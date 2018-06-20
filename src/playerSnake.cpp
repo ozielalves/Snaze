@@ -46,10 +46,8 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 	Q.push(Pos(initialPosition));
 	std::string toHash;
 	
-	int i = 0;
 	while(!Q.empty()){
-		++i;
-//		std:: cout << "counter: " << i << std::endl;
+	
 		auto V = Q.front();
 		toHash.clear();
 		toHash += V.current.x + '0'; 
@@ -58,12 +56,6 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 		if(V.current == apple){
 			V.path.push_back(V.current);	
 			Directions = V.path;
-			std::cout << "ended true" << std::endl;
-//			std::cout << "what was hashed just now " << V.current.x << " " <<  V.current.y << std::endl;
-			for (auto i = V.path.begin(); i != V.path.end(); ++i) {
-				std::cout << "Solution Coordenates " << (*i).y << " " << (*i).x  << std::endl;
-			}
-				std::cout << "Apple loc " << apple.y << " " << apple.x << std::endl;
 
 			hash.clear();
 			toHash.clear();
@@ -75,7 +67,6 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 		}
 
 		if(!hash.insert(toHash,0)) {
-//		std::cout << "string that was already in hash: " << toHash << std::endl;
 		Q.pop();
 		continue;
 		}
@@ -96,7 +87,6 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 		Q.pop();
 		}
 
-	std::cout << "ended false" << std::endl;
 	hash.clear();
 	return false;
 
