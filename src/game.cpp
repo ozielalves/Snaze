@@ -11,9 +11,6 @@ void Game::runSnake( ){
 
     bool stop = moveSnake( );
 
-    if( stop == false ){
-        currentStatus = RUN;
-    }
 
 }
 
@@ -227,12 +224,21 @@ Position Game::throwApple( ){
 *   @return 1 if the snake ate the apple/crashed somewhere and 0 otherwise. */
 bool Game::moveSnake( ){ 
 
-    clearSnake( ); // Deletes the past snake in the board.
 
     Position dir = sk.Directions[sk.currentDirection];
+
+	if(lv.currentBoard[dir.y][dir.x] == '0') // if it tries to touch itself
+	{
+		currentStatus = DEAD;
+    
+		putSnake( ); // Puts the snake back in the board.
+		return false;
+
+	}
+    
+	clearSnake( ); // Deletes the past snake in the board.
     sk.snakeBody.push_front( dir );
     sk.snakeBody.pop_back();
-
     
     putSnake( ); // Puts the snake back in the board.
 
