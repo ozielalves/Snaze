@@ -25,7 +25,12 @@ void Game::random_move()
     clearSnake( ); // Deletes the past snake in the board.
 
     Position dir = adjacentPosition(sk.snakeBody.front(), random ()  % 4);
-    if(isWall(lv.currentBoard[dir.y][dir.x])){
+    
+	while(lv.currentBoard[dir.y][dir.x] == '0')
+	{
+    	Position dir = adjacentPosition(sk.snakeBody.front(), random ()  % 4);
+	}
+	if(isWall(lv.currentBoard[dir.y][dir.x])){
 		currentStatus = CRASH;
     
 		putSnake( ); // Puts the snake back in the board.
