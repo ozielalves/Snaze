@@ -23,7 +23,7 @@ Now, we show how to run the program
 make
 
 # To execute program:
-$ ./snaze
+$ ./snaze data/boards
 
 # Detail: The program will also show the possible errors.
 ```
