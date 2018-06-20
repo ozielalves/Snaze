@@ -114,8 +114,8 @@ void Game::deadSnake(){
 
     lifes -= 1;
 
-    std::cout << "You've crashed! :c \n";
-    std::cout << ">>> Press <ENTER> when you are ready to continue.";
+    std::cout << "\nYou've crashed! :c \n";
+    std::cout << "\n>>> Press <ENTER> when you are ready to continue.";
     std::string tcl;
     std::getline( std::cin, tcl );
 	

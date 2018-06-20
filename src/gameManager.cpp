@@ -125,9 +125,9 @@ void Manager::welcome( ){
     int n_lives  = game.getLifes();
 
     system("clear");                                                                                          
-    std::cout << "	                                Welcome, This is the Snaze game                          	\n";    
-    std::cout << "                     O jogo possui " << n_levels << " fases e você tem " << n_lives << " vidas! Boa sorte!\n";
-    std::cout << "                      				Press <ENTER> To start!               					\n";
+    std::cout << "                              Welcome, This is the Snaze game                           \n";    
+    std::cout << "                  The game has " << n_levels << " phases and you have " << n_lives << " lifes! Get ready!\n";
+    std::cout << "                                 Press <ENTER> To start!                                   \n";
     std::cout << "\n";
     std::cout << "//////////////////////////////////////////////////////////////////////////////////////////////////\n";
 
@@ -167,11 +167,11 @@ void Manager::render( ){
     Position initial = game.startPoint();
     std::cout << "                                              LEVEL "<< game.getCurrentLevel() <<"                                             \n";
     std::cout << "                                                                                                  \n";
-    std::cout << "                                LIVES: " << game.getLifes() << "    ||   Food eaten:  " << game.getEatenApples() << " of 10                             \n";
+    std::cout << "                                Lifes: " << game.getLifes() << "    ||   Eaten food:  " << game.getEatenApples() << " of 10                             \n";
     std::cout << "\n";
     std::cout << "//////////////////////////////////////////////////////////////////////////////////////////////////\n";
 
-	// Adjusting the game (centralizando)
+    // Adjusting the game (centralizando)
     int numero_espacos = (int) ( 92 - currentBoard_.front().size() ) / 2;
     
     for( unsigned int i(0u); i < currentBoard_.size() ; i++ ){
@@ -187,25 +187,26 @@ void Manager::render( ){
         
         std::cout << "///\n";
     }
- }
+
+    std::cout << "//////////////////////////////////////////////////////////////////////////////////////////////////\n";
+}
 
 //! @brief Shows the final results.
- void Manager::render_final( ){
+void Manager::render_final( ){
 
     // Recovers the Player status
     bool result = game.getStatus();
-        std::cout << "\n";
-    std::cout << "//////////////////////////////////////////////////////////////////////////////////////////////////\n";
+    std::cout << "\n";
     std::cout << "                                            Game Over                                             \n";
-    std::cout << "//////////////////////////////////////////////////////////////////////////////////////////////////\n";
+    std::cout << "\n";
 
     // If the player won
     if( result == true ){
-        std::cout << "                               Congratulations, YOU WON!!!                                    \n";
+        std::cout << "                                    Congratulations, YOU WON!!!                                    \n";
     }
 
     if( result == false ){
-    	std::cout << "                              What a shame, fantastic loser!                                    \n";
+        std::cout << "                                  What a shame, fantastic loser!                                    \n";
     }
     std::cout << "//////////////////////////////////////////////////////////////////////////////////////////////////\n";
 }
@@ -217,16 +218,16 @@ void Manager::update( ){
         case Game::Status::RUN:
             game.runSnake(); 
             break;
-		case Game::Status::RANDOM:
-			game.random_move();
-			break;
+        case Game::Status::RANDOM:
+            game.random_move();
+            break;
         case Game::Status::GROW:
             game.growSnake();
             break;
         case Game::Status::NEXT_LEVEL:
             game.nextLevel();
                 std::cout << "\n";
-                std::cout << "                         Press <ENTER> When you're ready.                      \n";
+                std::cout << "                               Press <ENTER> When you're ready.                      \n";
                 std::cout << "\n";
                 std::cout << "//////////////////////////////////////////////////////////////////////////////////////////////////\n";
             break;
