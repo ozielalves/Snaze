@@ -217,6 +217,9 @@ void Manager::update( ){
         case Game::Status::RUN:
             game.runSnake(); 
             break;
+		case Game::Status::RANDOM:
+			game.random_move();
+			break;
         case Game::Status::GROW:
             game.growSnake();
             break;

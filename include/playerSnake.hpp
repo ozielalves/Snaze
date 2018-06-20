@@ -41,12 +41,6 @@ class Snake {
         				Position sizeBoard,
         				Position apple );
 
-        /** @brief Returns the adjacent position accoring to the direction.
-            @param pos Current position.
-            @param dir Current position next place.
-            @return Posição adjacente. */
-		Position adjacentPosition( Position pos, short int dir );
-
         /** @brief verify if the last position is part of the snake body.
             @return true if it is a position occuped by the snake, false otherwise. */
         bool is_snakeBody(const Position & pos) const;
@@ -56,7 +50,5 @@ class Snake {
             @return true if the 'pos' is valid, false otherwise. */
         bool is_validPosition( Position pos, Position size );
 };
-
-//#include "playerSnake.inl"
 
 #endif

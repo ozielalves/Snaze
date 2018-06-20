@@ -9,18 +9,39 @@ Snake sk;
 /** @brief The snake start_s the apple chase. */
 void Game::runSnake( ){
 
-//    bool solve = sk.solveMaze( lv.currentBoard, lv.start, sizesBoards[ lv.currentLevel - 1 ], apple );
-
     bool stop = moveSnake( );
 
     if( stop == false ){
         currentStatus = RUN;
     }
 
-/*    if( solve == false ){
-        currentStatus = CRASH;
-        return;
-    }*/
+}
+
+void Game::random_move()
+{
+
+	std::mt19937 random (std::chrono::system_clock::now().time_since_epoch().count());
+
+    clearSnake( ); // Deletes the past snake in the board.
+
+    Position dir = adjacentPosition(sk.snakeBody.front(), random ()  % 4);
+    if(isWall(lv.currentBoard[dir.y][dir.x])){
+		currentStatus = CRASH;
+    
+		putSnake( ); // Puts the snake back in the board.
+		return;
+	}
+    sk.snakeBody.push_front( dir );
+    sk.snakeBody.pop_back();
+
+    
+    putSnake( ); // Puts the snake back in the board.
+
+    if( ateApple() ){ // If the snake ate the apple
+        currentStatus = GROW;
+        lv.eatenApples += 1;
+    }
+
 }
 
 /** @brief Makes the snake grow one snake_size_unity. */
@@ -56,6 +77,9 @@ void Game::growSnake( ){
     }
 
     bool solve = sk.solveMaze( lv.currentBoard, lv.start, sizesBoards[ lv.currentLevel - 1 ], apple );
+
+	if (solve == false) currentStatus = RANDOM;
+
 }
 
 /** @brief Calls the next level. */
@@ -91,8 +115,15 @@ void Game::deadSnake(){
     std::cout << ">>> Press <ENTER> when you are ready to continue.";
     std::string tcl;
     std::getline( std::cin, tcl );
+	
+	/* Resizes the snake's body*/
+	while(sk.snakeBody.size() > 2) sk.snakeBody.pop_back();
 
-    currentStatus = RUN;
+    bool solve = sk.solveMaze( lv.currentBoard, lv.start, sizesBoards[ lv.currentLevel - 1 ], apple );
+
+	if ( solve = false) currentStatus = RANDOM;
+
+	else currentStatus = RUN;
 
 }
 

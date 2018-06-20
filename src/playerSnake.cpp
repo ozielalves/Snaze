@@ -104,32 +104,6 @@ bool Snake::solveMaze( 	std::vector<std::string> currentBoard,
 
 
 					
-/** @brief Returns the adjacent position accoring to the direction.
-	@param pos Current position.
-	@param dir Current position next place.
-	@return Posição adjacente. */
-Position Snake::adjacentPosition( Position pos, short int dir ){
-
-    switch( dir ){
-        case NORTH:
-            pos.set( NORTH );
-            break;
-
-        case SOUTH:
-            pos.set( SOUTH );
-            break;
-
-        case WEST:
-            pos.set( WEST );
-            break;
-
-        case EAST:
-            pos.set( EAST );
-            break;
-    }
-
-    return pos;
-}
 
 /** @brief verify if the last position is part of the snake body.
 	@return true if it is a position occuped by the snake, false otherwise. */

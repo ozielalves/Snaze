@@ -63,6 +63,5 @@ public:
 
 };
 
-//#include "gameManager.inl"
 
 #endif

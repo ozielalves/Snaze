@@ -15,7 +15,8 @@
 #include <string>
 #include <vector>
 #include <ctime>
-
+#include <random>
+#include <chrono>
 /*------------------------------ Directions ---------------------------------*/
 
 	enum Direction{
@@ -69,6 +70,32 @@
 
 	};
 
+/** @brief Returns the adjacent position accoring to the direction.
+	@param pos Current position.
+	@param dir Current position next place.
+	@return Posição adjacente. */
+inline Position adjacentPosition( Position pos, short int dir ){
+
+    switch( dir ){
+        case NORTH:
+            pos.set( NORTH );
+            break;
+
+        case SOUTH:
+            pos.set( SOUTH );
+            break;
+
+        case WEST:
+            pos.set( WEST );
+            break;
+
+        case EAST:
+            pos.set( EAST );
+            break;
+    }
+
+    return pos;
+}
 /*---------------------------------------------------------------------------*/
 
 #include "level.hpp"
@@ -97,7 +124,7 @@ public:
 		NEXT_LEVEL, //!< The snake ate all the apples on that level and goes to the next level.
 		CRASH, 		//!< The snake crashed on the wall or on its own tail.
 		DEAD, 		//!< The snake have no more lifes remaining.
-
+		RANDOM
 	};
 
 	/** @brief The snake starts the apple chase. */
@@ -105,7 +132,10 @@ public:
 
 	/** @brief Makes the snake grow one snake_size_unity. */
     void growSnake( );
+	
 
+	/** @brief Random moves when solve fails */
+	void random_move();
 
     /** @brief Calls the next level. */
     void nextLevel( );
