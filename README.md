@@ -9,9 +9,6 @@ To compile we will use a makefile, so all compilations be more dynamic and autom
 # To compile the whole project, insert 'make':
 $ make
 
-# To compile only the objects and see if class implementations were compiled well, insert 'make build':
-$ make build
-
 # To clean up all remaining trahsh data and files, such as the binary ones, insert 'make clean':
 $ make clean
 ```
@@ -33,16 +30,16 @@ $ ./snaze data/boards
 
 ## TODO
 
-- [ ] Snaze Game class
-  - [ ] Status Functions
-  - [ ] Position/Diretions Funtions
-  - [ ] Maze reading and Processing
-  - [ ] Action Functions
-  - [ ] Setters and Getters 
-- [ ] Snake class
+- [x] Snaze Game class
+  - [x] Status Functions
+  - [x] Position/Diretions Funtions
+  - [x] Maze reading and Processing
+  - [x] Action Functions
+  - [x] Setters and Getters 
+- [x] Snake class
 - [x] Level class 
-- [ ] Game process(and error) manager
-- [ ] Makefile >:D
+- [x] Game process(and error) manager
+- [x] Makefile >:D
 
 ## Authorship
 
