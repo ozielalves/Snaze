@@ -216,7 +216,7 @@ void Manager::update( ){
 
     switch (game.currentStatus){
         case Game::Status::RUN:
-            game.runSnake(); 
+            game.moveSnake(); 
             break;
         case Game::Status::RANDOM:
             game.random_move();

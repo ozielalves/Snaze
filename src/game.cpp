@@ -6,13 +6,6 @@ Snake sk;
 
 /*---------------------------- Status -------------------------------*/
 
-/** @brief The snake start_s the apple chase. */
-void Game::runSnake( ){
-
-    bool stop = moveSnake( );
-
-
-}
 
 void Game::random_move()
 {
@@ -57,13 +50,6 @@ void Game::growSnake( ){
 	
     throwApple();
 
-    if( sk.snakeSize == 0 ){ // If the snake size is 1 it is transformed to snake
-        lv.currentBoard[pos.y][pos.x] = 'D';
-        sk.snakeBody.push_front( pos );
-
-        sk.snakeSize += 1; // Snake growing
-    }
-
     if( sk.snakeSize >= 1 ){ // If the snake size is bigger or iqual to 1 it grows
         sk.Directions.clear();
         sk.currentDirection = 0;
@@ -74,6 +60,12 @@ void Game::growSnake( ){
         sk.snakeSize += 1; // Snake grows
     }
     
+    if( sk.snakeSize == 0 ){ // If the snake size is 1 it is transformed to snake
+		sk.snakeBody.front() = pos;
+        sk.snakeBody.push_front( pos );
+
+        sk.snakeSize += 1; // Snake growing
+    }
 	bool solve = sk.solveMaze( lv.currentBoard, lv.start, sizesBoards[ lv.currentLevel - 1 ], apple );
 
 	if (solve == false) currentStatus = RANDOM;
@@ -122,7 +114,8 @@ void Game::deadSnake(){
 	clearSnake();
 	
 	/* Resizes the snake's body*/
-	while(sk.snakeBody.size() > 2) sk.snakeBody.pop_back();
+	while(sk.snakeBody.size() > 1) sk.snakeBody.pop_back();
+
 
     bool solve = sk.solveMaze( lv.currentBoard, lv.start, sizesBoards[ lv.currentLevel - 1 ], apple );
 
