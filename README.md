@@ -1,7 +1,7 @@
 # Snaze
 
 ## Description
-
+The project consists of the implementation of a simulation based on the traditional game "Snake". The Snaze game consists of the use of an artificial intelligence to solve the maze and eat the apple. The player starts with 5 lifes and in standard game development there are 3 stages.
 
 ## How to compile
 To compile we will use a makefile, so all compilations be more dynamic and automatic.
